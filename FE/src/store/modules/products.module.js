@@ -1,4 +1,4 @@
-import { getProducts } from '@/service/products.service.js';
+import { getProducts, getProductById } from '@/service/products.service.js';
 
 const state = {
   products: [],
@@ -13,6 +13,21 @@ const state = {
   search: '',
   category: 0,
 };
+// const getters = {
+//   listImage(state) {
+//     let images = [...state.product.image]
+//     console.log(images)
+//       images = images.map((item) => {
+//         console.log(item)
+//         return "http://localhost:3000/images/" + item.url
+//       })
+//       return images
+//   }
+
+// }
+
+
+
 const actions = {
   async getProducts(
     { state, commit },
@@ -39,6 +54,15 @@ const actions = {
     commit('setTotal', response.meta.total);
     commit('setLoading', false);
   },
+
+  async getProductById({ commit }, productId) {
+    commit("setLoading", true);
+
+    const product = await getProductById(productId);
+
+    commit("setProduct", product);
+    commit("setLoading", false);
+  },
 };
 const mutations = {
   setLoading(state, status) {
@@ -46,6 +70,9 @@ const mutations = {
   },
   setProducts(state, response) {
     state.products = response;
+  },
+  setProduct(state, product) {
+    state.product = product;
   },
   setPageIndex(state, index) {
     index = parseInt(index, 10);
@@ -78,4 +105,5 @@ export default {
   state,
   actions,
   mutations,
+
 };

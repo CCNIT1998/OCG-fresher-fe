@@ -22,9 +22,13 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
+              <router-link to="/">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="#"
+                    >Home</a
+                  >
+                </li>
+              </router-link>
               <li class="nav-item">
                 <a class="nav-link" href="#"></a>
               </li>
@@ -37,7 +41,7 @@
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  Dropdown
+                  Products
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li><a class="dropdown-item" href="#">Loa</a></li>
@@ -48,11 +52,7 @@
                 </ul>
               </li>
               <li class="nav-item">
-                <a
-                  class="nav-link"
-                  href="#"
-                  tabindex="-1"
-                  aria-disabled="true"
+                <a class="nav-link" href="#" tabindex="-1" aria-disabled="true"
                   >Contact</a
                 >
               </li>
@@ -70,9 +70,9 @@
             </form>
             <div class="header-cart">
               <router-link to="/cart">
-              <i class="bi bi-cart-plus">
-                <sup>3</sup>
-              </i>
+                <i class="bi bi-cart-plus">
+                  <sup>{{ totalItems }}</sup>
+                </i>
               </router-link>
             </div>
 
@@ -85,7 +85,6 @@
             <router-link to="/register">
               <a class="navbar-brand" href="#">Register </a>
             </router-link>
-
           </div>
         </div>
       </nav>
@@ -95,20 +94,26 @@
 ￼￼
 
 <script>
-import Slide from '@/components/Slide.vue';
-
+import Slide from "@/components/Slide.vue";
+import { mapGetters } from "vuex";
 export default {
-  name: 'Header',
+  name: "Header",
   components: {
     Slide,
   },
   data() {
-    return { textSearch: '' };
+    return { textSearch: "" };
+  },
+  created() {
+    this.$store.dispatch("cart/getProductsInCart");
+  },
+  computed: {
+    ...mapGetters("cart", ["totalItems"]),
   },
   methods: {
     async searchProducts() {
-      console.log('ok');
-      await this.$store.dispatch('products/getProducts', {
+      console.log("ok");
+      await this.$store.dispatch("products/getProducts", {
         search: this.textSearch,
         pageIndex: 1,
       });
@@ -117,7 +122,7 @@ export default {
 };
 </script>
 <style scoped>
-a{
+a {
   text-decoration: none;
   font-size: 15px;
 }
@@ -140,7 +145,7 @@ form input {
   padding: 5px 20px 0 10px;
   font-size: 25px;
 }
-.header-cart a{
+.header-cart a {
   padding: 5px 20px 0 10px;
   font-size: 20px;
   color: black;

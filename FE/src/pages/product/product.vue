@@ -22,7 +22,7 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            <p>Product 1</p>
+            <p>Loa</p>
             <i class="bi bi-caret-right"></i>
           </button>
         </div>
@@ -34,7 +34,7 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            <p>Product 2</p>
+            <p>Tai Nghe</p>
             <i class="bi bi-caret-right"></i>
           </button>
 
@@ -66,7 +66,7 @@
             v-for="product in products"
             :key="product.ID"
           >
-            <router-link to="/ProductDetail">
+            <router-link :to="'/products/' + product.id">
               <div class="card">
                 <img
                   v-if="product.image"
@@ -83,7 +83,7 @@
                   <h5 class="card-title">{{ product.name }}</h5>
                   <div class="d-flex justify-content-between">
                     <p class="card-text">{{ product.price }}</p>
-                    <a href="#" class="btn btn-outline-primary">Add to Cart</a>
+                    <a @click="addProductToCart(product)" href="#" class="btn btn-outline-primary">Add to Cart</a>
                   </div>
                 </div>
               </div>
@@ -142,6 +142,14 @@ export default {
         query: { page: this.pageIndex, sort: sort, order: 'price' },
       });
     },
+
+    
+    addProductToCart(item) {
+      console.log(item)
+      this.$store.dispatch('cart/addProductToCart',item)
+    },
+
+
   },
   watch: {
     async '$route.query'() {
@@ -152,6 +160,7 @@ export default {
 
   async created() {
     let queryUrl = parseQueryProduct(this.$route.query);
+    queryUrl.limit=6
     await this.$store.dispatch('products/getProducts', queryUrl);
   },
 };

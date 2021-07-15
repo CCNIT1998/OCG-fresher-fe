@@ -12,12 +12,21 @@ const getProducts = async ({
     const respon = await axios.get(
       `/products?page=${page}&limit=${limit}&sort=${sort}&order=${order}&search=${search}&category=${categoryId}`
     );
-    return respon.data  
+    return respon.data
   } catch (e) {
     return
   }
 };
 
+const getProductById = async (productId) => {
+  try {
+    const respon = await axios.get(`/products/${productId}`);
+    return respon.data;
+  } catch (e) {
+    return
+  }
+
+};
 
 
-export { getProducts }
+export { getProducts, getProductById }

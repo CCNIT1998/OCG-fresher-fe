@@ -1,95 +1,87 @@
 <template >
-    <div class="container">
-        <h3>related products</h3>
-        <div class="row">
-            <div class="col-md-6 col-lg-3">
-                <div class="card">
-                <img
-                  src="https://via.placeholder.com/200x200"
-                  class="card-img-top"
-                  alt="..."
-                />
-                <div class="card-body">
-                  <h5 class="card-title">product name 1</h5>
-                  <div class="d-flex justify-content-between">
-                    <p class="card-text">$300</p>
-                    <a href="#" class="btn btn-outline-primary">Add to Cart</a>
-                  </div>
-                </div>
+  <div class="container">
+    <h3>related products</h3>
+    <div class="row">
+      <div
+        class="col-md-6 col-lg-3"
+        v-for="item in products"
+        :key="item.ID"
+      >
+        <router-link :to="'/products/' + item.id">
+          <div class="card">
+            <div>
+              <img
+                :src="rootImageUrl(item.image[0].url)"
+                class="card-img-top"
+                alt="..."
+              />
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">{{ item.name }}</h5>
+              <div class="d-flex justify-content-between">
+                <p class="card-text">{{ item.price }}</p>
+                <button
+                  @click="addProductToCart(item)"
+                  class="btn btn-outline-primary"
+                >
+                  Add to Cart
+                </button>
               </div>
             </div>
-
-            <div class="col-md-6 col-lg-3">
-                <div class="card">
-                <img
-                  src="https://via.placeholder.com/200x200"
-                  class="card-img-top"
-                  alt="..."
-                />
-                <div class="card-body">
-                  <h5 class="card-title">product name 1</h5>
-                  <div class="d-flex justify-content-between">
-                    <p class="card-text">$300</p>
-                    <a href="#" class="btn btn-outline-primary">Add to Cart</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-6 col-lg-3">
-                <div class="card">
-                <img
-                  src="https://via.placeholder.com/200x200"
-                  class="card-img-top"
-                  alt="..."
-                />
-                <div class="card-body">
-                  <h5 class="card-title">product name 1</h5>
-                  <div class="d-flex justify-content-between">
-                    <p class="card-text">$300</p>
-                    <a href="#" class="btn btn-outline-primary">Add to Cart</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-6 col-lg-3">
-                <div class="card">
-                <img
-                  src="https://via.placeholder.com/200x200"
-                  class="card-img-top"
-                  alt="..."
-                />
-                <div class="card-body">
-                  <h5 class="card-title">product name 1</h5>
-                  <div class="d-flex justify-content-between">
-                    <p class="card-text">$300</p>
-                    <a href="#" class="btn btn-outline-primary">Add to Cart</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </div>
+          </div>
+        </router-link>
+      </div>
     </div>
+  </div>
 </template>
 <script>
+import { mapState } from "vuex";
+import rootImageUrl from "@/utils/rootImageUrl";
 export default {
-    name:"ProductSale"
-}
+  name: "ProductSale",
+  computed: {
+    ...mapState("products", ["products", "product", "isLoading"]),
+  },
+  async created() {
+    await this.$store.dispatch("products/getProducts", {
+      category: this.product.category_id,
+      limit: 4,
+    });
+  },
+  methods: {
+    rootImageUrl,
+    addProductToCart(item) {
+      console.log(item);
+      this.$store.dispatch("cart/addProductToCart", item);
+    },
+  },
+};
 </script>
 <style scoped>
-    h3{
-        margin: 15px 0px;
-        border-top: 1px solid #00071326;
-        font-size: 18px;
-        padding-top:10px;
-    }
-    .card{
-        max-width: 250px;
-        min-width: 250px;
-        margin: 0 auto;
-    }
-    .container{
-        margin-bottom: 20px;
-    }
+a {
+  text-decoration: none;
+  color: black;
+}
+
+h5.card-title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  font-size: 15px;
+  overflow: hidden;
+}
+h3 {
+  margin: 15px 0px;
+  border-top: 1px solid #00071326;
+  font-size: 18px;
+  padding-top: 10px;
+}
+.card {
+  max-width: 250px;
+  min-width: 250px;
+  margin: 0 auto;
+}
+.container {
+  margin-bottom: 20px;
+}
 </style>

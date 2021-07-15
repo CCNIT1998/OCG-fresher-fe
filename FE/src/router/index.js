@@ -18,7 +18,7 @@ import Listuser from "@/admin/user/list-user.vue";
 const routes = [
   {path: "/",name: "Product",component: Product},
   {path: "/:pathMatch(.*)*", component: () => import("@/components/404.vue") },
-  {path: "/product/:id",component: ProductDetail},
+  {path: "/products/:id",component: ProductDetail},
 
   // {path: "/productDetail/:id",name: "ProductDetail",component: ProductDetail},
   {path: "/cart", component: Cart},
