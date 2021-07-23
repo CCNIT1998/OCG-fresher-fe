@@ -17,8 +17,9 @@
             <p class="category">Order <i class="bi bi-caret-right"></i></p>
         </router-link>
         <!-- products -->
+        <router-link to="/admin/product">
         <p @click="showText = !showText" class="category">Product <i class="bi bi-caret-down"></i></p>
-
+        </router-link>
         <div class="btn-group dropend category-btn">
             <button v-show="!showText" type="button" class="btn" data-bs-toggle="dropdown" aria-expanded="false">
                 <p>Tai nghe</p>

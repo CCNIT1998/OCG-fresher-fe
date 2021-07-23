@@ -1,6 +1,7 @@
 <template>
   <main class="main">
     <div class="row">
+      <Collection />
       <!-- category -->
       <div class="col-sm-0 col-md-3 category">
         <div class="btn-group dropend category-btn">
@@ -37,7 +38,6 @@
             <p>Tai Nghe</p>
             <i class="bi bi-caret-right"></i>
           </button>
-
         </div>
 
         <select
@@ -66,7 +66,7 @@
             v-for="product in products"
             :key="product.ID"
           >
-            <router-link :to="'/products/' + product.id">
+            <router-link :to="'/products/' + handle(product.name)">
               <div class="card">
                 <img
                   v-if="product.image"
@@ -82,8 +82,15 @@
                 <div class="card-body">
                   <h5 class="card-title">{{ product.name }}</h5>
                   <div class="d-flex justify-content-between">
-                    <p class="card-text">{{ product.price }}</p>
-                    <a @click="addProductToCart(product)" href="#" class="btn btn-outline-primary">Add to Cart</a>
+                    <p class="card-text">
+                      {{ formatMoney(product.price) }}<sup>vnđ</sup>
+                    </p>
+                    <a
+                      @click="addProductToCart(product)"
+                      href="#"
+                      class="btn btn-outline-primary"
+                      >Add to Cart</a
+                    >
                   </div>
                 </div>
               </div>
@@ -92,13 +99,13 @@
 
           <!-- pagination -->
           <div class="pagiantio">
-          <Pagination
-            :length="lastPage"
-            :pageSize="limit"
-            :pageIndex="pageIndex"
-            @change="changePage"
-          >
-          </Pagination>
+            <Pagination
+              :length="lastPage"
+              :pageSize="limit"
+              :pageIndex="pageIndex"
+              @change="changePage"
+            >
+            </Pagination>
           </div>
           <!-- end pagination -->
         </div>
@@ -108,60 +115,70 @@
   </main>
 </template>
 <script>
-import { mapState } from 'vuex';
-import Pagination from '@/components/Pagination.vue';
-import parseQueryProduct from '@/utils/parseQueryProduct.js';
+import Collection from "@/components/Collection.vue";
+import { mapState } from "vuex";
+import Pagination from "@/components/Pagination.vue";
+import parseQueryProduct from "@/utils/parseQueryProduct.js";
+import formatMoney from "@/utils/formatMoney.js";
 export default {
-  name: 'Product',
+  name: "Product",
   components: {
     Pagination,
+    Collection,
   },
+
   computed: {
-    ...mapState('products', [
-      'isLoading',
-      'products',
-      'totalItems',
-      'pageIndex',
-      'limit',
-      'lastPage',
-      'sort',
-      'search',
-      'order',
+    ...mapState("products", [
+      "isLoading",
+      "products",
+      "totalItems",
+      "pageIndex",
+      "limit",
+      "lastPage",
+      "sort",
+      "search",
+      "order",
     ]),
+    
   },
   methods: {
+
+    handle(name){
+     
+      return name
+    },
+
+    formatMoney,
     changePage(pageIndex) {
       this.$router.push({
-        name: 'Product',
+        name: "Product",
         query: { page: pageIndex, sort: this.sort, order: this.order },
       });
     },
     sortPrice(sort) {
       this.$router.push({
-        name: 'Product',
-        query: { page: this.pageIndex, sort: sort, order: 'price' },
+        name: "Product",
+        query: { page: this.pageIndex, sort: sort, order: "price" },
       });
     },
 
-    
     addProductToCart(item) {
-      console.log(item)
-      this.$store.dispatch('cart/addProductToCart',item)
+      console.log(item);
+      this.$store.dispatch("cart/addProductToCart", item);
     },
-
-
   },
+
   watch: {
-    async '$route.query'() {
+    async "$route.query"() {
       let queryUrl = parseQueryProduct(this.$route.query);
-      await this.$store.dispatch('products/getProducts', queryUrl);
+      await this.$store.dispatch("products/getProducts", queryUrl);
     },
   },
 
   async created() {
     let queryUrl = parseQueryProduct(this.$route.query);
-    queryUrl.limit=6
-    await this.$store.dispatch('products/getProducts', queryUrl);
+    queryUrl.limit = 6;
+    await this.$store.dispatch("products/getProducts", queryUrl);
   },
 };
 </script>
@@ -171,7 +188,7 @@ main {
   padding: 10px 40px;
 }
 
-.category-lv1 button{
+.category-lv1 button {
   padding-left: 50px;
 }
 a {
@@ -184,8 +201,8 @@ a {
   object-fit: cover;
   margin: 0 auto;
 }
-.pagiantio{
-  margin-top: 15px
+.pagiantio {
+  margin-top: 15px;
 }
 .category-btn {
   display: block;

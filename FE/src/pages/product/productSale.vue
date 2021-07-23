@@ -11,15 +11,22 @@
           <div class="card">
             <div>
               <img
-                :src="rootImageUrl(item.image[0].url)"
-                class="card-img-top"
-                alt="..."
-              />
+                  v-if="item.image"
+                  :src="`http://localhost:3000/images/` + item.image[0].url"
+                  class="card-img-top"
+                />
+
+                <img
+                  v-else
+                  src="https://via.placeholder.com/250x250"
+                  class="card-img-top"
+                />
+             
             </div>
             <div class="card-body">
               <h5 class="card-title">{{ item.name }}</h5>
               <div class="d-flex justify-content-between">
-                <p class="card-text">{{ item.price }}</p>
+                <p class="card-text">{{ formatMoney(item.price) }}<sup>vnđ</sup> </p>
                 <button
                   @click="addProductToCart(item)"
                   class="btn btn-outline-primary"
@@ -37,6 +44,8 @@
 <script>
 import { mapState } from "vuex";
 import rootImageUrl from "@/utils/rootImageUrl";
+import formatMoney from "@/utils/formatMoney.js";
+
 export default {
   name: "ProductSale",
   computed: {
@@ -49,6 +58,7 @@ export default {
     });
   },
   methods: {
+    formatMoney,
     rootImageUrl,
     addProductToCart(item) {
       console.log(item);

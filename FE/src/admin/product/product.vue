@@ -21,12 +21,17 @@ export default {
 };
 </script>
 <style scoped>
+footer.footer {
+    display: none;
+}
+#carouselExampleDark{
+  display: none;
+}
 .main {
   height: 100vh;
   padding-right: 20px;
   margin: 0 !important;
   position: absolute;
-  height: 100vh;
   top: 0px;
   left: 0px !important;
   right: 0px !important;

@@ -23,13 +23,20 @@
           :key="product.id"
         >
           <div class="col text-left" style="width: 60px; height: 60px">
-            <img src="https://via.placeholder.com/60x60" alt="" />
+            <img :src="rootImageUrl(product.image?product.image[0].url:'')" />
           </div>
           <div class="col n product-name">{{ product.name }}</div>
-          <div class="col n">{{ product.quantity }}</div>
-          <div class="col n">{{ product.totalPrice }}</div>
+          <div class="col n">
+            <i class="bi bi-dash quantity-i"></i>
+            <input class="input-quantity" :value="product.quantity">
+            
+            <i class="bi bi-plus quantity-i"></i>
+            </div>
+
+          <div class="col n">{{ formatMoney(product.totalPrice) }}<sup>vnđ</sup> </div>
           <div @click="deleteProduct(index)" class="col delete-product n">
             <i class="bi bi-x text-right"></i>
+            
           </div>
         </div>
 
@@ -93,7 +100,7 @@
       <div class="col-2">
         <div class="row">
           <div class="col-6">subTotal:</div>
-          <div class="col-6">{{ subTotal }}</div>
+          <div class="col-6">{{ formatMoney(subTotal) }}<sup>vnđ</sup></div>
         </div>
         
         <div class="row">
@@ -102,7 +109,7 @@
         </div>
         <div class="row">
           <div class="col-6">Total:</div>
-          <div class="col-6">{{total}}</div>
+          <div class="col-6">{{ formatMoney(total) }}<sup>vnđ</sup></div>
         </div>
       </div>
     </div>
@@ -113,6 +120,8 @@
 <script>
 import ProductSale from "@/pages/product/productSale.vue";
 import { mapState, mapGetters } from "vuex";
+import rootImageUrl from "@/utils/rootImageUrl";
+import formatMoney from "@/utils/formatMoney.js"
 export default {
   name: "Cart",
   components: {
@@ -128,6 +137,8 @@ export default {
     ...mapGetters("cart", ["total","totalItems", "subTotal"]),
   },
   methods: {
+    formatMoney,
+    rootImageUrl,
     changeQuanti(value, index) {
       let convert = parseInt(value, 10);
       this.cloneCart[index].quantity = convert;
@@ -152,11 +163,27 @@ export default {
 </script>
 
 <style scoped>
+.quantity-i{
+  font-size: 25px;
+  margin: 2px;
+}
+.quantity-i:hover{
+  cursor: pointer;
+}
+.input-quantity{
+  width: 30px;
+  height: 30px;
+  text-align: center;
+}
 .product-name{
    display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
   overflow: hidden;
+}
+img{
+  max-width: 60px;
+  max-height: 60px;
 }
 
 #basic-addon2 {

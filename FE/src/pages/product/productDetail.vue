@@ -65,24 +65,16 @@
           </div>
           <br /><br />
           <div class="row">
-            <div class="col-3">Size</div>
+            <div class="col-3">Price</div>
             <div class="col-9">
-              <div
-                class="btn-group"
-                role="group"
-                aria-label="Basic outlined example"
-              >
-                <button type="button" class="btn btn-outline">M</button>
-                <button type="button" class="btn btn-outline">L</button>
-                <button type="button" class="btn btn-outline">XL</button>
-              </div>
+              {{ formatMoney(product.price) }}<sup>vnđ</sup>
             </div>
           </div>
           <router-link to="/Cart">
             <div class="product-cart">
-              <button type="button" class="btn btn-outline-primary">
+              <!-- <button type="button" class="btn btn-outline-primary">
                 <i class="bi bi-cart-plus"></i>Add To Cart
-              </button>
+              </button> -->
               <a href="" class="btn btn-outline-primary">Buy Now</a>
             </div>
           </router-link>
@@ -97,6 +89,7 @@
 import ProductSale from "@/pages/product/productSale.vue";
 import { mapState } from "vuex";
 import rootImageUrl from "@/utils/rootImageUrl";
+import formatMoney from "@/utils/formatMoney.js";
 export default {
   name: "ProductDetail",
   components: {
@@ -134,7 +127,8 @@ export default {
       this.imgActive = this.product.image[index];
       this.indexActive = index;
     },
-    rootImageUrl
+    rootImageUrl,
+    formatMoney,
   },
 };
 </script>
@@ -166,7 +160,7 @@ export default {
 }
 
 .product-cart a {
-  margin-left: 14px;
+  /* margin-left: 14px; */
   margin-right: 5px;
   background-color: #d0011b;
   color: white;
