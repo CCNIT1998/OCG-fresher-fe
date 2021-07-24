@@ -7,7 +7,7 @@
         v-for="item in products"
         :key="item.ID"
       >
-        <router-link :to="'/products/' + item.id">
+        <router-link :to="'/products/' + item.handle">
           <div class="card">
             <div>
               <img
@@ -68,11 +68,16 @@ export default {
 };
 </script>
 <style scoped>
+sup{
+  color: black;
+}
 a {
   text-decoration: none;
   color: black;
 }
-
+.card-title,.card-text{
+  color: black;
+}
 h5.card-title {
   display: -webkit-box;
   -webkit-box-orient: vertical;

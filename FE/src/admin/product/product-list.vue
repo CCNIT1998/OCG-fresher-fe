@@ -34,7 +34,7 @@
         <div class="col">Tai nghe</div>
         <div class="col">{{ item.trade_mark }}</div>
         <div class="col edit">
-           <router-link :to="'/admin/product/add/' + item.id">
+           <router-link :to="'/admin/product/add/' + item.handle">
             <div><i class="bi bi-pencil"></i>Edit</div>
           </router-link>
 
@@ -98,6 +98,13 @@ export default {
     }
   },
 
+  watch: {
+    async '$route.query'() {
+      let queryUrl = parseQueryProduct(this.$route.query);
+      await this.$store.dispatch('products/getProducts', queryUrl);
+    },
+  },
+
   async created() {
     let queryUrl = parseQueryProduct(this.$route.query);
     queryUrl.limit = 6;
@@ -109,6 +116,10 @@ export default {
 };
 </script>
 <style scoped>
+div{
+  color: black;
+}
+
 .edit :is(div) {
   display: inline-block;
   margin-right: 2px;
@@ -154,7 +165,9 @@ export default {
 .header {
   padding-left: 12px;
 }
-
+p{
+  color: black;
+}
 .header p {
   display: inline-block;
   font-size: 18 px;
@@ -169,6 +182,7 @@ export default {
 .header-icon i {
   margin: 5px 8px;
   opacity: 0.8;
+  color: black
 }
 
 .header-icon i:nth-child(2) sup {

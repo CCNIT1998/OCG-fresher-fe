@@ -163,6 +163,12 @@ export default {
 </script>
 
 <style scoped>
+.container{
+  background-color:#21252973;
+}
+input{
+  color: black;
+}
 .quantity-i{
   font-size: 25px;
   margin: 2px;
@@ -188,6 +194,10 @@ img{
 
 #basic-addon2 {
   cursor: pointer;
+  
+}
+#basic-addon2 i{
+color: black;
 }
 .products {
   border: 1px solid #e5e7e8;

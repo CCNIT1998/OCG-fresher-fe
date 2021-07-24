@@ -56,21 +56,17 @@
 
         
         <div class="row">
-          <!-- Category -->
+          <!-- Collection -->
           <div class="col-3">
-            <label for="exampleDataList" class="form-label">Category</label>
-            <input
-              class="form-control"
-              list="datalistOptions"
-              id="exampleDataList"
-              value="Tai nghe"
-            />
-            <datalist id="datalistOptions">
-              <option value="Loa"></option>
-              <option value="Tai nghe"></option>
-              
-            </datalist><br />
+            <label for="TradeMark" class="form-label">Collection</label>
+            <select class="form-select" id="Collection">
+              <option value="Headphone">Headphone</option>
+              <option value="Speaker">Speaker</option>
+              <option value="US">Guitar</option>
+              <option value="US">Mp4</option>
+            </select>
           </div>
+
           <!-- Trade Mark -->
           <div class="col-3">
             <label for="TradeMark" class="form-label">Trade Mark</label>
@@ -117,12 +113,14 @@ export default {
   methods: {
     onSubmit() {
       let TradeMark = document.querySelector('#TradeMark')['value']
+      let Collection = document.querySelector('#Collection')['value']
+      
       axios
         .post("http://localhost:3000/products", {
           name: this.name,
           description: this.description,
           price: Number(this.price),
-          category_id: 1,
+          Collection: Collection,
           trade_mark: TradeMark,
           // image: this.FILE
         })

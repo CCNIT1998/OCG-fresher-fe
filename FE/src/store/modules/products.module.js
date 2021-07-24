@@ -55,10 +55,9 @@ const actions = {
     commit('setLoading', false);
   },
 
-  async getProductById({ commit }, productId) {
+  async getProductById({ commit }, handle) {
     commit("setLoading", true);
-
-    const product = await getProductById(productId);
+    const product = await getProductById(handle);
 
     commit("setProduct", product);
     commit("setLoading", false);

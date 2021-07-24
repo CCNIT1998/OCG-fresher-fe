@@ -5,6 +5,7 @@ const parseQueryProduct = (query) => {
     order: query.order ? query.order : '',
     category: query.category ? query.category : '',
     search: query.search ? query.search : '',
+    limit: query.limit ? query.limit : '',
   };
 };
 export default parseQueryProduct;

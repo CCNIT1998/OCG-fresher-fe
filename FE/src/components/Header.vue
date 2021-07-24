@@ -1,122 +1,143 @@
 <template>
-  <div>
-    <Slide />
-    <header class="contener">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <router-link to="/">
-            <a class="navbar-brand" href="#"
-              ><img src="https://via.placeholder.com/50x50" alt="logo" />
-            </a>
-          </router-link>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <router-link to="/">
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#"
-                    >Home</a
-                  >
+  <header>
+    <nav class="navbar navbar-expand-lg shadow rounded ">
+      <div class="container">
+        <router-link to="/">
+          <a class="navbar-brand" href="#"
+            ><img src="https://via.placeholder.com/50x50" alt="logo" />
+          </a>
+        </router-link>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <i class="bi bi-filter-right"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <router-link to="/">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+            </router-link>
+            <li class="nav-item">
+              <a class="nav-link" href="#"></a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Collection
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">Loa</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="#">Tai nghe</a>
                 </li>
-              </router-link>
-              <li class="nav-item">
-                <a class="nav-link" href="#"></a>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" tabindex="-1" aria-disabled="true"
+                >Contact</a
+              >
+            </li>
+          </ul>
+          <form class="d-flex" @submit.prevent="searchProducts()">
+            <input
+              class="form-control position-relative"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+              v-model="textSearch"
+            />
+            <i class="bi bi-search header-icon-search"></i>
+            <!-- <button class="btn btn-outline-success position-relative" type="submit">Search</button> -->
+          </form>
+          <div class="header-cart">
+            <router-link to="/cart">
+              <i class="bi bi-cart-plus">
+                <sup>{{ totalItems }}</sup>
+              </i>
+            </router-link>
+          </div>
+
+          <div v-if="user" class="dropdown">
+            <router-link
+              to="/admin/product"
+              class="nav-link dropdown-toggle"
+              id="navbarDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              {{
+                user.role == 1
+                  ? 'Admin'
+                  : user.first_name + ' ' + user.last_name
+              }}
+            </router-link>
+
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li>
+                <router-link v-if="user.role==1" class="dropdown-item" to="/admin/product">
+                  Manager
+                </router-link>
               </li>
-              <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="navbarDropdown"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Products
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="#">Loa</a></li>
-                  <li><hr class="dropdown-divider" /></li>
-                  <li>
-                    <a class="dropdown-item" href="#">Tai nghe</a>
-                  </li>
-                </ul>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#" tabindex="-1" aria-disabled="true"
-                  >Contact</a
-                >
+              <li>
+                <button class="dropdown-item" @click="logout">Logout</button>
               </li>
             </ul>
-            <form class="d-flex" @submit.prevent="searchProducts()">
-              <input
-                class="form-control position-relative"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-                v-model="textSearch"
-              />
-              <i class="bi bi-search header-icon-search"></i>
-              <!-- <button class="btn btn-outline-success position-relative" type="submit">Search</button> -->
-            </form>
-            <div class="header-cart">
-              <router-link to="/cart">
-                <i class="bi bi-cart-plus">
-                  <sup>{{ totalItems }}</sup>
-                </i>
-              </router-link>
-            </div>
-
-            <router-link to="/admin/product">
-              <a class="navbar-brand" href="#">Admin </a>
+          </div>
+          <div v-else>
+            <router-link class="navbar-brand" to="/login">
+              Login
             </router-link>
-            <router-link to="/login">
-              <a class="navbar-brand" href="#">Login </a>
-            </router-link>
-            <router-link to="/register">
-              <a class="navbar-brand" href="#">Register </a>
+            <router-link class="navbar-brand" to="/register">
+              Register
             </router-link>
           </div>
         </div>
-      </nav>
-    </header>
-  </div>
+      </div>
+    </nav>
+  </header>
 </template>
 ￼￼
 
 <script>
-import Slide from "@/components/Slide.vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from 'vuex';
 export default {
-  name: "Header",
-  components: {
-    Slide,
-  },
+  name: 'Header',
+
   data() {
-    return { textSearch: "" };
+    return { textSearch: '' };
   },
   created() {
-    this.$store.dispatch("cart/getProductsInCart");
+    this.$store.dispatch('cart/getProductsInCart');
   },
   computed: {
-    ...mapGetters("cart", ["totalItems"]),
+    ...mapGetters('cart', ['totalItems']),
+    ...mapState('user', ['user']),
   },
   methods: {
     async searchProducts() {
-      console.log("ok");
-      await this.$store.dispatch("products/getProducts", {
+      await this.$store.dispatch('products/getProducts', {
         search: this.textSearch,
         pageIndex: 1,
       });
+    },
+    async logout() {
+      await this.$store.dispatch('user/logout');
     },
   },
 };
@@ -125,6 +146,7 @@ export default {
 a {
   text-decoration: none;
   font-size: 15px;
+  color: white;
 }
 
 header {
@@ -133,6 +155,14 @@ header {
   right: 0;
   left: 0;
   z-index: 5;
+  background-color: #362222 !important;
+  border-bottom: 1px solid rgba(223, 170, 67, 0.3);
+}
+.dropdown-menu {
+  background-color: #2b2b2b;
+}
+.dropdown-item {
+  color: white;
 }
 
 form input {
@@ -148,7 +178,7 @@ form input {
 .header-cart a {
   padding: 5px 20px 0 10px;
   font-size: 20px;
-  color: black;
+  color: white;
 }
 sup {
   border: 1px solid rgba(0, 0, 0, 0.144);

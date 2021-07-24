@@ -10,10 +10,10 @@
   </div>
 </template>
 <script>
-import ProductList from "@/admin/product/product-list.vue";
-import Category from "@/admin/product/category.vue";
+import ProductList from '@/admin/product/product-list.vue';
+import Category from '@/admin/product/category.vue';
 export default {
-  name: "AdminProduct",
+  name: 'AdminProduct',
   components: {
     ProductList,
     Category,
@@ -22,13 +22,13 @@ export default {
 </script>
 <style scoped>
 footer.footer {
-    display: none;
+  display: none;
 }
-#carouselExampleDark{
+#carouselExampleDark {
   display: none;
 }
 .main {
-  height: 100vh;
+  height: 150vh;
   padding-right: 20px;
   margin: 0 !important;
   position: absolute;
@@ -39,7 +39,6 @@ footer.footer {
   width: 100vw;
   background-color: yellow;
   z-index: 10;
-  background-color:white;
+  background-color: white;
 }
-
 </style>

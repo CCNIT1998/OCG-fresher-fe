@@ -102,26 +102,27 @@ export default {
    
     };
   },
-
   computed: {
     ...mapState("products", ["product", "isLoading"]),
   },
-
   async created() {
     // Get product detail
     await this.$store.dispatch(
       "products/getProductById",
-      this.$route.params.id
+      this.$route.params.handle
     );
-    console.log(this.$route.params.id);
-
-
+    console.log(this.$route.params.handle);
   },
-
   async beforeRouteUpdate(to) {
-    this.$store.dispatch("products/getProductById", to.params.id);
+    console.log(to.params.handle);
+    await this.$store.dispatch("products/getProductById", to.params.handle);
   },
-
+  // watch: {
+  //   async '$route.params'() {
+  //     // let queryUrl = parseQueryProduct(this.$route.query);
+  //     await this.$store.dispatch("products/getProductById", {collectionId});
+  //   },
+  // },
   methods: {
     changeActiveImg(index) {
       this.imgActive = this.product.image[index];
@@ -139,7 +140,6 @@ export default {
 .product-cart i {
   margin-right: 10px;
 }
-
 .product-cart button:hover {
   opacity: 1;
 }
@@ -149,7 +149,6 @@ export default {
 .description {
   text-align: justify;
 }
-
 .product-cart button {
   margin-right: 5px;
   background-color: rgba(208, 1, 27, 0.12);
@@ -158,7 +157,6 @@ export default {
   border: none;
   border-radius: 0;
 }
-
 .product-cart a {
   /* margin-left: 14px; */
   margin-right: 5px;
@@ -168,36 +166,30 @@ export default {
   border: none;
   border-radius: 0;
 }
-
 .product-detail {
   margin: 20px 0px;
 }
 .product-content h5 {
   margin-bottom: 16px;
 }
-
 .image {
   display: inline-block;
 }
-
 .img-scroll {
   margin-top: 5px;
 }
-
 .img-show {
   /* max-width: 350px;
   min-width: 350px; */
   width: 350px !important;
   height: 350px !important;
 }
-
 .picture img {
   max-width: 60px;
   min-width: 60px;
   margin: 0px 2px;
   cursor: pointer;
 }
-
 .active {
   border: 1px solid #ee4d2d;
 }
@@ -205,7 +197,6 @@ export default {
   margin-right: 15px;
   border: 1px solid rgb(201, 165, 144);
 }
-
 .btn-group button:hover {
   border: 1px solid #ee4d2d;
 }

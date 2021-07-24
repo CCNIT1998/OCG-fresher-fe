@@ -81,18 +81,21 @@
             </div>
 
             <br />
-            <!-- Category -->
+            <!-- Collection -->
             <div class="row">
-              <div class="col-3">Category</div>
+              <div class="col-3">Collection</div>
               <div class="col-9">
-                <input
-                  type="email"
-                  class="form-control"
-                  id="exampleFormControlInput1"
-                  value="Tai Nghe"
-                />
+                <select class="form-select" id="Collection">
+                  <option value="Headphone">Headphone</option>
+                  <option value="Speaker">Speaker</option>
+                  <option value="US">Guitar</option>
+                  <option value="US">Mp4</option>
+                </select>
               </div>
             </div>
+
+            
+         
 
             <!-- Price -->
             <br />
@@ -206,7 +209,7 @@ export default {
         });
 
       alert("updated successfully");
-      location.reload();
+      // location.reload();
     },
 
     handleFileUpload() {
@@ -216,16 +219,19 @@ export default {
     submitFile() {
       console.log("http://localhost:3000/uploads/" + String(this.product.id));
       let formData = new FormData();
-      formData.append('file', "/home/cuong/Videos/1/79190b65025fd4342211d976b7b9cfbb.jpeg");
+      formData.append(
+        "file",
+        "/home/cuong/Videos/1/79190b65025fd4342211d976b7b9cfbb.jpeg"
+      );
       axios
         .post(
           "http://localhost:3000/uploads/" + String(this.product.id),
           formData,
-                {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-                }
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
         )
         .then(function () {
           console.log("SUCCESS!!");
@@ -234,8 +240,6 @@ export default {
           console.log("FAILURE!!");
         });
     },
-
-   
   },
 };
 </script>
@@ -253,6 +257,12 @@ export default {
   background-color: yellow;
   z-index: 10;
   background-color: white;
+}
+div {
+  color: black !important;
+}
+option {
+  color: black !important;
 }
 
 .product-cart {

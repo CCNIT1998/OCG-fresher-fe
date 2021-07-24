@@ -54,15 +54,16 @@
 
         <div class=" list-category">
             <button type="button" class="btn" data-bs-toggle="dropdown" aria-expanded="false">
-                <p>Category</p>
+                <p>Collection</p>
                 <i class="bi bi-caret-down"></i>
             </button>
 
             <ul class="dropdown-menu display-category">
-                <li><a class="dropdown-item" href="#">Tai nghe</a></li>
-                <li><a class="dropdown-item" href="#">Loa</a></li>
-                <li><a class="dropdown-item" href="#">Sac</a></li>
-                <router-link to="/admin/category/add">
+                <li><a class="dropdown-item" href="#">Speaker</a></li>
+                <li><a class="dropdown-item" href="#">Headphone</a></li>
+                <li><a class="dropdown-item" href="#">Guitar</a></li>
+                <li><a class="dropdown-item" href="#">Mp4</a></li>
+                <router-link to="/admin/collection/add">
                     <li><a class="dropdown-item" href="#" style="border:1px solid rgba(255, 255, 255, 0.226)">Add
                             Product</a></li>
                 </router-link>
@@ -102,7 +103,7 @@
     .container-left {
         background-color: #212529;
         color: white;
-        height: 100vh;
+        height: 150vh;
         padding: 10px;
         top: 0px;
         bottom: 0px;
